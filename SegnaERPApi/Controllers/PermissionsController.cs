@@ -1,12 +1,14 @@
 using Business.Abstract;
 using Core.Entities.Concrete;
 using Entities.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SegnaERPApi.Controllers
 {
     [Route("api/permissions")]
     [ApiController]
+    [Authorize(Roles = "admin")]
     public class PermissionsController : ControllerBase
     {
         private readonly IOperationClaimService _operationClaimService;

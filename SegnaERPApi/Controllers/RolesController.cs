@@ -1,12 +1,14 @@
 using Business.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SegnaERPApi.Controllers
 {
     [Route("api/roles")]
     [ApiController]
+    [Authorize(Roles = "admin")]
     public class RolesController : ControllerBase
     {
         private readonly IRolTanimService _rolTanimService;
