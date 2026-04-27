@@ -9,7 +9,7 @@ namespace SegnaERPApi.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : Controller
+    public class AuthController : ControllerBase
     {
         private IAuthService _authService;
 
@@ -50,6 +50,10 @@ namespace SegnaERPApi.Controllers
 
             // 2. Kayıt işlemini gerçekleştir
             var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
+            if (!registerResult.Success)
+            {
+                return BadRequest(registerResult.Message);
+            }
 
             // 3. Kayıt başarılıysa, otomatik olarak bir Token oluştur ve dön
             var result = _authService.CreateAccessToken(registerResult.Data);

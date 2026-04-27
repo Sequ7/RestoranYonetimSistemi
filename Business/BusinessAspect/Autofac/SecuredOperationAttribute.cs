@@ -21,12 +21,13 @@ namespace Business.BusinessAspect.Autofac
         public SecuredOperationAttribute(string roles)
         {
             _roles = roles.Split(',');
-            _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
+            _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>()
+                ?? throw new InvalidOperationException("IHttpContextAccessor bulunamadı.");
         }
 
         protected override void OnBefore(IInvocation invocation)
         {
-            var roleClaims = _httpContextAccessor.HttpContext.User.ClaimRoles();
+            var roleClaims = _httpContextAccessor.HttpContext?.User?.ClaimRoles() ?? new List<string>();
             foreach (var role in _roles)
             {
                 if (roleClaims.Contains(role))

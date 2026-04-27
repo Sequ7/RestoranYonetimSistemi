@@ -1,8 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Core.Entities.Concrete;
 using Entities.Concrete;
 
@@ -12,6 +7,8 @@ namespace Business.Abstract
     {
         List<OperationClaim> GetClaims(Kullanici kullanici);
         void Add(Kullanici kullanici);
-        Kullanici GetByMail(string email);
+        Kullanici? GetByMail(string email);
+        Kullanici? GetById(int id);
+        IList<Kullanici> GetAll();
     }
 }

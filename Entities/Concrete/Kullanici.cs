@@ -1,24 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Core.Entities.Abstract;
-using Core.Entities.Concrete;
 
 namespace Entities.Concrete
 {
+    [Table("Kullanicilar")]
     public class Kullanici : IEntity
     {
+        [Column("KullaniciID")]
         public int KullaniciID { get; set; }
-        public string Ad { get; set; }
-        public string Soyad { get; set; }
-        public string EPosta { get; set; }
-        public string KullaniciAdi { get; set; }
-        public byte[] PasswordSalt { get; set; }
-        public byte[] PasswordHash { get; set; }
+
+        [Column("Ad")]
+        public string Ad { get; set; } = string.Empty;
+
+        [Column("Soyad")]
+        public string Soyad { get; set; } = string.Empty;
+
+        [Column("EPosta")]
+        public string EPosta { get; set; } = string.Empty;
+
+        [Column("KullaniciAdi")]
+        public string KullaniciAdi { get; set; } = string.Empty;
+
+        [Column("PasswordSalt")]
+        public byte[] PasswordSalt { get; set; } = Array.Empty<byte>();
+
+        [Column("PasswordHash")]
+        public byte[] PasswordHash { get; set; } = Array.Empty<byte>();
+
+        [Column("Aktif")]
         public bool Aktif { get; set; }
     }
 }

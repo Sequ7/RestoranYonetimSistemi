@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
@@ -45,6 +47,7 @@ namespace Business.Concrete
             return new SuccessDataResult<AccessToken>(accessToken, "Erişim jetonu oluşturuldu");
         }
 
+        [ValidationAspect(typeof(UserForLoginDtoValidator))]
         public IDataResult<Kullanici> Login(UserForLoginDto userForLoginDto)
         {
             // Senin EPosta sütununa göre sorguluyoruz
@@ -66,8 +69,14 @@ namespace Business.Concrete
             return new SuccessDataResult<Kullanici>(userToCheck, "Başarılı giriş");
         }
 
+        [ValidationAspect(typeof(UserForRegisterDtoValidator))]
         public IDataResult<Kullanici> Register(UserForRegisterDto userForRegisterDto, string password)
         {
+            if (userForRegisterDto.Password != userForRegisterDto.PasswordRepeat)
+            {
+                return new ErrorDataResult<Kullanici>("Şifre tekrarı uyuşmuyor");
+            }
+
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
 

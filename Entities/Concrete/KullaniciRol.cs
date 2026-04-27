@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Core.Entities.Abstract;
 
-namespace Core.Entities.Concrete
+namespace Entities.Concrete
 {
-    [Table("UserOperationClaims")]
-    public class UserOperationClaim : IEntity
+    [Table("KullaniciRolleri")]
+    public class KullaniciRol : IEntity
     {
         [Column("Id")]
         public int Id { get; set; }
@@ -12,7 +12,7 @@ namespace Core.Entities.Concrete
         [Column("KullaniciID")]
         public int KullaniciID { get; set; }
 
-        [Column("OperationClaimId")]
-        public int OperationClaimId { get; set; }
+        [Column("RolTanimID")]
+        public int RolTanimID { get; set; }
     }
 }
