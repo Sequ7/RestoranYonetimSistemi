@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Core.Entities.Abstract;
+
+namespace Core.Entities.Concrete
+{
+    public class BaseEntity : IEntity
+    {
+        public int Id { get; set; }
+        public bool AktifMi { get; set; } = true;
+    }
+}

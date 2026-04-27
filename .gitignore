@@ -1,0 +1,14 @@
+# .NET
+bin/
+obj/
+*.user
+.vs/
+
+# Node
+node_modules/
+.expo/
+dist/
+
+# Ortam
+.env
+appsettings.Development.json

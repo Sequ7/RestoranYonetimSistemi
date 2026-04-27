@@ -1,0 +1,6 @@
+@SegnaERPApi_HostAddress = http://localhost:5095
+
+GET {{SegnaERPApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
