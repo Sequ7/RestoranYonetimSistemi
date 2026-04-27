@@ -26,6 +26,7 @@ builder.Services.AddDependencyResolvers(
 
 // Controllers
 builder.Services.AddControllers();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddEndpointsApiExplorer();
 ServiceTool.Create(builder.Services);
 
