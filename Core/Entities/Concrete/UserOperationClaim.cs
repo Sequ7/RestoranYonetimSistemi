@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 using Core.Entities.Abstract;
 
 namespace Core.Entities.Concrete
 {
-    public class UserOperationClaim:IEntity
+    [Table("UserOperationClaims")]
+    public class UserOperationClaim : IEntity
     {
-        public int Id { get; set; }  
-        public int UserId { get; set; }             
+        [Column("Id")]
+        public int Id { get; set; }
+
+        [Column("KullaniciID")]
+        public int KullaniciID { get; set; }
+
+        [Column("OperationClaimId")]
         public int OperationClaimId { get; set; }
     }
 }
