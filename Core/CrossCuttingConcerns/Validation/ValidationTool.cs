@@ -11,10 +11,14 @@ namespace Core.CrossCuttingConcerns.Validation
     {
         public static void Validate(IValidator validator, object entity)
         {
-            var result = validator.Validate((IValidationContext)entity);
+            // Nesneyi bir "Context" içine paketliyoruz (Cast hatasını bu çözer)
+            var context = new ValidationContext<object>(entity);
+
+            var result = validator.Validate(context);
+
             if (!result.IsValid)
             {
-                throw new FluentValidation.ValidationException(result.Errors);
+                throw new ValidationException(result.Errors);
             }
         }
     }

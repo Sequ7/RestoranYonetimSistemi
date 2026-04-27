@@ -25,7 +25,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.Entity<OperationClaim>().ToTable("OperationClaims").HasKey(oc => oc.Id);
             modelBuilder.Entity<RolYetki>().ToTable("RolYetkileri").HasKey(ry => ry.RolYetkiID);
             modelBuilder.Entity<UserOperationClaim>().ToTable("UserOperationClaims").HasKey(uoc => uoc.Id);
-            modelBuilder.Entity<KullaniciRol>().ToTable("KullaniciRolleri").HasKey(kr => kr.KullaniciRolID);
+            modelBuilder.Entity<KullaniciRol>().ToTable("KullaniciRolleri").HasKey(kr => kr.ID);
 
             modelBuilder.Entity<RolYetki>()
                 .HasIndex(x => new { x.RolTanimID, x.OperationClaimID })
@@ -62,7 +62,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.Entity<UserOperationClaim>()
                 .HasOne<Kullanici>()
                 .WithMany()
-                .HasForeignKey(x => x.UserId)
+                .HasForeignKey(x => x.KullaniciID)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<UserOperationClaim>()

@@ -1,4 +1,5 @@
 using Business.Abstract;
+using Business.BusinessAspect.Autofac;
 using Core.Entities.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -31,7 +32,7 @@ namespace Business.Concrete
         {
             _kullaniciDal.Add(kullanici);
         }
-
+        [SecuredOperation("admin")]
         public IList<Kullanici> GetAll() => _kullaniciDal.GetList();
 
         public Kullanici? GetByMail(string email)
@@ -58,7 +59,7 @@ namespace Business.Concrete
                     .Distinct()
                     .ToList();
 
-            var directPermissionIds = _userOperationClaimDal.GetList(x => x.UserId == kullanici.KullaniciID)
+            var directPermissionIds = _userOperationClaimDal.GetList(x => x.KullaniciID == kullanici.KullaniciID)
                 .Select(x => x.OperationClaimId)
                 .Distinct()
                 .ToList();
