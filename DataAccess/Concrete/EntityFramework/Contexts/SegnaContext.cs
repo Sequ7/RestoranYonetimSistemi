@@ -20,65 +20,20 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Kullanici>(entity =>
-            {
-                entity.ToTable("Kullanicilar");
-                entity.HasKey(x => x.KullaniciID);
-                entity.Property(x => x.KullaniciID).HasColumnName("KullaniciID");
-                entity.Property(x => x.Ad).HasColumnName("Ad");
-                entity.Property(x => x.Soyad).HasColumnName("Soyad");
-                entity.Property(x => x.EPosta).HasColumnName("EPosta");
-                entity.Property(x => x.KullaniciAdi).HasColumnName("KullaniciAdi");
-                entity.Property(x => x.PasswordHash).HasColumnName("PasswordHash");
-                entity.Property(x => x.PasswordSalt).HasColumnName("PasswordSalt");
-                entity.Property(x => x.Aktif).HasColumnName("Aktif");
-            });
+            modelBuilder.Entity<Kullanici>().ToTable("Kullanicilar").HasKey(k => k.KullaniciID);
+            modelBuilder.Entity<RolTanim>().ToTable("RolTanimlari").HasKey(r => r.RolTanimID);
+            modelBuilder.Entity<OperationClaim>().ToTable("OperationClaims").HasKey(oc => oc.Id);
+            modelBuilder.Entity<RolYetki>().ToTable("RolYetkileri").HasKey(ry => ry.RolYetkiID);
+            modelBuilder.Entity<UserOperationClaim>().ToTable("UserOperationClaims").HasKey(uoc => uoc.Id);
+            modelBuilder.Entity<KullaniciRol>().ToTable("KullaniciRolleri").HasKey(kr => kr.KullaniciRolID);
 
-            modelBuilder.Entity<RolTanim>(entity =>
-            {
-                entity.ToTable("RolTanimlari");
-                entity.HasKey(x => x.RolTanimID);
-                entity.Property(x => x.RolTanimID).HasColumnName("RolTanimID");
-                entity.Property(x => x.RolTanimAdi).HasColumnName("RolTanimAdi");
-            });
+            modelBuilder.Entity<RolYetki>()
+                .HasIndex(x => new { x.RolTanimID, x.OperationClaimID })
+                .IsUnique();
 
-            modelBuilder.Entity<OperationClaim>(entity =>
-            {
-                entity.ToTable("OperationClaims");
-                entity.HasKey(x => x.Id);
-                entity.Property(x => x.Id).HasColumnName("Id");
-                entity.Property(x => x.Name).HasColumnName("Name");
-                entity.Property(x => x.Description).HasColumnName("Description");
-            });
-
-            modelBuilder.Entity<RolYetki>(entity =>
-            {
-                entity.ToTable("RolYetkileri");
-                entity.HasKey(x => x.RolYetkiID);
-                entity.Property(x => x.RolYetkiID).HasColumnName("RolYetkiID");
-                entity.Property(x => x.RolTanimID).HasColumnName("RolTanimID");
-                entity.Property(x => x.OperationClaimID).HasColumnName("OperationClaimID");
-                entity.HasIndex(x => new { x.RolTanimID, x.OperationClaimID }).IsUnique();
-            });
-
-            modelBuilder.Entity<KullaniciRol>(entity =>
-            {
-                entity.ToTable("KullaniciRolleri");
-                entity.HasKey(x => x.Id);
-                entity.Property(x => x.Id).HasColumnName("Id");
-                entity.Property(x => x.KullaniciID).HasColumnName("KullaniciID");
-                entity.Property(x => x.RolTanimID).HasColumnName("RolTanimID");
-                entity.HasIndex(x => new { x.KullaniciID, x.RolTanimID }).IsUnique();
-            });
-
-            modelBuilder.Entity<UserOperationClaim>(entity =>
-            {
-                entity.ToTable("UserOperationClaims");
-                entity.HasKey(x => x.Id);
-                entity.Property(x => x.Id).HasColumnName("Id");
-                entity.Property(x => x.KullaniciID).HasColumnName("KullaniciID");
-                entity.Property(x => x.OperationClaimId).HasColumnName("OperationClaimId");
-            });
+            modelBuilder.Entity<KullaniciRol>()
+                .HasIndex(x => new { x.KullaniciID, x.RolTanimID })
+                .IsUnique();
 
             modelBuilder.Entity<KullaniciRol>()
                 .HasOne<Kullanici>()
@@ -107,7 +62,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.Entity<UserOperationClaim>()
                 .HasOne<Kullanici>()
                 .WithMany()
-                .HasForeignKey(x => x.KullaniciID)
+                .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<UserOperationClaim>()

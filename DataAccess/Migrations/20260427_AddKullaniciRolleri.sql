@@ -7,7 +7,7 @@ IF NOT EXISTS (
 BEGIN
     CREATE TABLE [dbo].[KullaniciRolleri]
     (
-        [Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+        [KullaniciRolID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
         [KullaniciID] INT NOT NULL,
         [RolTanimID] INT NOT NULL,
         CONSTRAINT [FK_KullaniciRolleri_Kullanicilar] FOREIGN KEY ([KullaniciID]) REFERENCES [dbo].[Kullanicilar]([KullaniciID]) ON DELETE CASCADE,

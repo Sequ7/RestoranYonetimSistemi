@@ -58,7 +58,7 @@ namespace Business.Concrete
                     .Distinct()
                     .ToList();
 
-            var directPermissionIds = _userOperationClaimDal.GetList(x => x.KullaniciID == kullanici.KullaniciID)
+            var directPermissionIds = _userOperationClaimDal.GetList(x => x.UserId == kullanici.KullaniciID)
                 .Select(x => x.OperationClaimId)
                 .Distinct()
                 .ToList();
